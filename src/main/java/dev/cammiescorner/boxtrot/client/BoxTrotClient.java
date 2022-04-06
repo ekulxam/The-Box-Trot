@@ -1,7 +1,9 @@
 package dev.cammiescorner.boxtrot.client;
 
+import dev.cammiescorner.boxtrot.client.models.SussyBarrelModel;
 import dev.cammiescorner.boxtrot.mixin.client.WorldRendererAccessor;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
@@ -15,6 +17,8 @@ import net.minecraft.util.math.Vec3d;
 public class BoxTrotClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
+		EntityModelLayerRegistry.registerModelLayer(SussyBarrelModel.MODEL_LAYER, SussyBarrelModel::getTexturedModelData);
+
 		WorldRenderEvents.AFTER_ENTITIES.register(context -> {
 			MinecraftClient client = MinecraftClient.getInstance();
 

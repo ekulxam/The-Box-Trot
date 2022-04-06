@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -21,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class InGameHudMixin {
 	@Shadow @Final private MinecraftClient client;
 	@Shadow protected abstract void renderOverlay(Identifier texture, float opacity);
+
+	@Unique private static final Identifier BARREL_OVERLAY = BoxTrot.id("textures/misc/barrel_hole.png");
 
 	@ModifyExpressionValue(method = "renderCrosshair", at = @At(value = "FIELD",
 			target = "net/minecraft/client/MinecraftClient.targetedEntity : Lnet/minecraft/entity/Entity;",
@@ -38,7 +41,7 @@ public abstract class InGameHudMixin {
 	))
 	public void boxtrot$renderOverlay(MatrixStack matrices, float tickDelta, CallbackInfo info) {
 		if(client.player != null && client.player.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL)) {
-			renderOverlay(BoxTrot.id("textures/misc/barrel_hole.png"), 1F);
+			renderOverlay(BARREL_OVERLAY, 1F);
 		}
 	}
 }
