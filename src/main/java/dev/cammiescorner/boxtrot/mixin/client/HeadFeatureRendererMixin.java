@@ -42,15 +42,16 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
 			target = "Lnet/minecraft/client/render/entity/feature/HeadFeatureRenderer;translate(Lnet/minecraft/client/util/math/MatrixStack;Z)V"
 	))
 	private boolean boxtrot$noWeirdItemShit(MatrixStack matrices, boolean villager) {
-		return isBarrel;
+		return !isBarrel;
 	}
 
 	@Inject(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/MinecraftClient;getHeldItemRenderer()Lnet/minecraft/client/render/item/HeldItemRenderer;"
 	), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
 	private void boxtrot$render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo info, ItemStack itemStack, Item item, boolean bl) {
-		if(item == Items.BARREL) {
-			isBarrel = true;
+		isBarrel = item == Items.BARREL;
+
+		if(isBarrel) {
 			matrixStack.pop();
 			matrixStack.pop();
 			matrixStack.push();
@@ -59,7 +60,7 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
 			matrixStack.translate(0, 0.625, 0);
 
 			if(!livingEntity.isSneaking()) {
-				matrixStack.translate(0, -0.35, 0);
+				matrixStack.translate(0, -0.425, 0);
 				matrixStack.multiply(Vec3f.NEGATIVE_Y.getDegreesQuaternion(livingEntity.getYaw(g) + 180));
 
 				barrelModel.render(matrixStack, vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutout(SUSSY_BARREL)), i, OverlayTexture.DEFAULT_UV, 1F, 1F, 1F, 1F);
