@@ -8,7 +8,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 
 public class FakeBarrelInventory extends SimpleInventory {
-	private final PlayerEntity target;
+	private PlayerEntity target;
 	private final World world;
 
 	public FakeBarrelInventory(PlayerEntity target) {
@@ -40,5 +40,9 @@ public class FakeBarrelInventory extends SimpleInventory {
 
 	public PlayerEntity getTarget() {
 		return target;
+	}
+
+	public void setTarget(PlayerEntity player) {
+		target = player;
 	}
 }

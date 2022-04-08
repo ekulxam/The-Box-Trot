@@ -3,6 +3,7 @@ package dev.cammiescorner.boxtrot.mixin.client;
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import dev.cammiescorner.boxtrot.BoxTrot;
 import dev.cammiescorner.boxtrot.client.models.SussyBarrelModel;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -11,6 +12,7 @@ import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.feature.HeadFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
+import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -31,6 +33,7 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
 
 	@Unique private boolean isBarrel;
 	@Unique private SussyBarrelModel<T> barrelModel;
+	@Unique private static final ItemStack BARREL_STACK = new ItemStack(Items.BARREL);
 	@Unique private static final Identifier SUSSY_BARREL = BoxTrot.id("textures/entity/sussy_barrel.png");
 
 	@Inject(method = "<init>(Lnet/minecraft/client/render/entity/feature/FeatureRendererContext;Lnet/minecraft/client/render/entity/model/EntityModelLoader;)V", at = @At("TAIL"))
@@ -64,9 +67,13 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
 				matrixStack.multiply(Vec3f.NEGATIVE_Y.getDegreesQuaternion(livingEntity.getYaw(g) + 180));
 
 				barrelModel.render(matrixStack, vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutout(SUSSY_BARREL)), i, OverlayTexture.DEFAULT_UV, 1F, 1F, 1F, 1F);
-				info.cancel();
-				matrixStack.pop();
 			}
+			else {
+				MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, BARREL_STACK, ModelTransformation.Mode.HEAD, false, matrixStack, vertexConsumerProvider, i);
+			}
+
+			info.cancel();
+			matrixStack.pop();
 		}
 	}
 }

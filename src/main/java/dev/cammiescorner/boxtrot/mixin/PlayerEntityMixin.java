@@ -14,6 +14,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -37,6 +38,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 	@Shadow public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 	@Shadow public abstract OptionalInt openHandledScreen(@Nullable NamedScreenHandlerFactory factory);
 	@Shadow protected abstract void closeHandledScreen();
+	@Shadow public ScreenHandler currentScreenHandler;
 
 	@Unique private int stoodStillFor;
 	@Unique private FakeBarrelInventory barrelInventory;
@@ -47,11 +49,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 	public void boxtrot$tick(CallbackInfo info) {
 		FakeBarrelInventory barrelInventory = getFakeBarrelInv();
 
-		if(barrelInventory != null) {
+		if(barrelInventory != null && currentScreenHandler != null) {
 			PlayerEntity target = barrelInventory.getTarget();
 
-			if(!(target.isSneaking() && target.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL)) || squaredDistanceTo(target) > 64)
+			if(!(target.isSneaking() && target.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL)) || squaredDistanceTo(target) > 64) {
 				closeHandledScreen();
+				this.barrelInventory = null;
+				return;
+			}
 
 			PlayerInventory playerInv = target.getInventory();
 
