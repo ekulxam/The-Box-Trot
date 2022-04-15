@@ -7,7 +7,6 @@
 		"ArmourSlotMixin",
 		"EndermanEntityMixin",
 		"LivingEntityMixin",
-		"MobEntityMixn",
 		"PlayerEntityMixin"
 	],
 	"client": [
