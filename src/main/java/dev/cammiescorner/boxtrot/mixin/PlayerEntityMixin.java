@@ -16,7 +16,7 @@ import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -105,7 +105,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 			barrelInventory = new FakeBarrelInventory(target);
 
 			openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inv, player) ->
-				GenericContainerScreenHandler.createGeneric9x3(syncId, inv, barrelInventory), new TranslatableText("container.barrel")
+				GenericContainerScreenHandler.createGeneric9x3(syncId, inv, barrelInventory), Text.translatable("container.barrel")
 			));
 
 			info.setReturnValue(ActionResult.success(world.isClient));

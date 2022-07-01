@@ -3,8 +3,8 @@ package dev.cammiescorner.boxtrot.common.packets;
 import dev.cammiescorner.boxtrot.BoxTrot;
 import dev.cammiescorner.boxtrot.common.FakeBarrel;
 import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.impl.networking.ClientSidePacketRegistryImpl;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -18,7 +18,7 @@ public class SyncStandingStillTimer {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeVarInt(value);
 
-		ClientSidePacketRegistryImpl.INSTANCE.sendToServer(ID, buf);
+		ClientPlayNetworking.send(ID, buf);
 	}
 
 	public static void handler(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
