@@ -19,7 +19,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -60,24 +59,20 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
 
 		if(isBarrel) {
 			matrixStack.pop();
-			matrixStack.pop();
-			matrixStack.push();
 			matrixStack.push();
 
 			matrixStack.translate(0, 0.625, 0);
 
 			if(!livingEntity.isSneaking()) {
-				matrixStack.translate(0, -0.425, 0);
-				matrixStack.multiply(Vec3f.NEGATIVE_Y.getDegreesQuaternion(livingEntity.getYaw(g) + 180));
-
+				matrixStack.translate(0, -1.375, 0);
 				barrelModel.render(matrixStack, vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutout(SUSSY_BARREL)), i, OverlayTexture.DEFAULT_UV, 1F, 1F, 1F, 1F);
 			}
 			else {
 				heldItemRenderer.renderItem(livingEntity, BARREL_STACK, ModelTransformation.Mode.HEAD, false, matrixStack, vertexConsumerProvider, i);
 			}
 
-			info.cancel();
 			matrixStack.pop();
+			info.cancel();
 		}
 	}
 }

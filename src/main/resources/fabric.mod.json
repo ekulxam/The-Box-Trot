@@ -25,11 +25,10 @@
 		"box-trot.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.14.8",
+		"fabricloader": ">=0.14.14",
 		"fabric": "*",
-		"minecraft": "1.19.x",
-		"pehkui": ">=3.3.3",
-		"cloth-config2": ">=7.0.72",
+		"minecraft": "1.19.3",
+		"pehkui": ">=3.7.0",
 		"java": ">=17"
 	}
 }

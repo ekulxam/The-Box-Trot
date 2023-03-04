@@ -18,9 +18,9 @@ public class SussyBarrelModel<T extends Entity> extends EntityModel<T> {
 
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
-		ModelPartData partdefinition = data.getRoot();
+		ModelPartData root = data.getRoot();
 
-		partdefinition.addChild("barrel", ModelPartBuilder.create().uv(0, 0).cuboid(-8F, -16F, -8F, 16F, 16F, 16F, new Dilation(0F)), ModelTransform.pivot(0F, 24F, 0F));
+		root.addChild("barrel", ModelPartBuilder.create().uv(0, 0).cuboid(-8F, -16F, -8F, 16F, 16F, 16F, new Dilation(0F)), ModelTransform.pivot(0F, 24F, 0F));
 
 		return TexturedModelData.of(data, 64, 64);
 	}
