@@ -1,6 +1,7 @@
 package dev.cammiescorner.boxtrot.mixin;
 
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import dev.cammiescorner.boxtrot.common.config.BoxTrotConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -26,18 +27,18 @@ public abstract class LivingEntityMixin extends Entity {
 			target = "Lnet/minecraft/world/World;addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"
 	))
 	private boolean boxtrot$noParticles(World world, ParticleEffect parameters, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
-		return !(isSneaking() && getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL));
+		return !(BoxTrotConfig.doesBarrelHideParticles && isSneaking() && getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL));
 	}
 
 	@Inject(method = "canTarget(Lnet/minecraft/entity/LivingEntity;)Z", at = @At("HEAD"), cancellable = true)
 	private void boxtrot$noTarget(LivingEntity target, CallbackInfoReturnable<Boolean> info) {
-		if(target instanceof PlayerEntity player && player.isSneaking() && player.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL))
+		if(BoxTrotConfig.doesBarrelFoolAttackers && target instanceof PlayerEntity player && player.isSneaking() && player.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL))
 			info.setReturnValue(false);
 	}
 
 	@Inject(method = "canSee", at = @At("HEAD"), cancellable = true)
 	private void boxtrot$noSee(Entity entity, CallbackInfoReturnable<Boolean> info) {
-		if(entity instanceof PlayerEntity player && player.isSneaking() && player.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL))
+		if(BoxTrotConfig.doesBarrelFoolMobs && entity instanceof PlayerEntity player && player.isSneaking() && player.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL))
 			info.setReturnValue(false);
 	}
 }

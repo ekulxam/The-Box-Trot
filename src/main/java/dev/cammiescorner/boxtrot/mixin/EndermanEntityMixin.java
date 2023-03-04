@@ -1,5 +1,6 @@
 package dev.cammiescorner.boxtrot.mixin;
 
+import dev.cammiescorner.boxtrot.common.config.BoxTrotConfig;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -16,7 +17,7 @@ public class EndermanEntityMixin {
 			target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z"
 	), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
 	public void boxtrot$cantSeeMe(PlayerEntity player, CallbackInfoReturnable<Boolean> info, ItemStack stack) {
-		if(stack.isOf(Items.BARREL))
+		if(BoxTrotConfig.doesBarrelFoolEndermen && stack.isOf(Items.BARREL))
 			info.setReturnValue(false);
 	}
 }

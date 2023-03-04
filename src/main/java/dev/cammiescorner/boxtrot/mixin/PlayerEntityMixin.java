@@ -2,6 +2,7 @@ package dev.cammiescorner.boxtrot.mixin;
 
 import dev.cammiescorner.boxtrot.common.FakeBarrel;
 import dev.cammiescorner.boxtrot.common.FakeBarrelInventory;
+import dev.cammiescorner.boxtrot.common.config.BoxTrotConfig;
 import dev.cammiescorner.boxtrot.common.packets.SyncStandingStillTimer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -101,7 +102,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 
 	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
 	private void boxtrot$openInventory(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> info) {
-		if(entity instanceof PlayerEntity target && target.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL) && target.isSneaking()) {
+		if(BoxTrotConfig.canOpenPlayerBarrels && entity instanceof PlayerEntity target && target.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL) && target.isSneaking()) {
 			barrelInventory = new FakeBarrelInventory(target);
 
 			openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inv, player) ->

@@ -1,0 +1,8 @@
+{
+	"boxtrot.midnightconfig.title": "The Box Trot",
+	"boxtrot.midnightconfig.doesBarrelFoolEndermen": "Does the barrel disguise let you look at Endermen?",
+	"boxtrot.midnightconfig.doesBarrelHideParticles": "Does the barrel disguise hide particles while Sneaking?",
+	"boxtrot.midnightconfig.doesBarrelFoolMobs": "Does the barrel disguise hide you from mobs while Sneaking?",
+	"boxtrot.midnightconfig.doesBarrelFoolAttackers": "Does the barrel disguise make attackers forget you while Sneaking?",
+	"boxtrot.midnightconfig.canOpenPlayerBarrels": "Can the player's inventory be opened while disguised as a barrel?"
+}

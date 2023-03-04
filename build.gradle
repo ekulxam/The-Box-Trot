@@ -11,6 +11,7 @@ repositories {
     maven { url "https://maven.terraformersmc.com" }
     maven { url "https://ladysnake.jfrog.io/artifactory/mods" }
     maven { url "https://jitpack.io" }
+    maven { url "https://api.modrinth.com/maven" }
 }
 
 dependencies {
@@ -23,6 +24,7 @@ dependencies {
     modImplementation("com.github.virtuoel:pehkui:${project.pehkui_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+    modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
 
     implementation("com.github.LlamaLad7:MixinExtras:${project.mixinextras_version}")
     annotationProcessor("com.github.LlamaLad7:MixinExtras:${project.mixinextras_version}")
