@@ -1,8 +1,8 @@
 package dev.cammiescorner.boxtrot.client.models;
 
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.cammiescorner.boxtrot.BoxTrot;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.math.MatrixStack;

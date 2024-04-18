@@ -2,7 +2,6 @@ package dev.cammiescorner.boxtrot.client;
 
 import dev.cammiescorner.boxtrot.client.models.SussyBarrelModel;
 import dev.cammiescorner.boxtrot.mixin.client.WorldRendererAccessor;
-import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.block.Blocks;
@@ -13,10 +12,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 
 public class BoxTrotClient implements ClientModInitializer {
 	@Override
-	public void onInitializeClient() {
+	public void onInitializeClient(ModContainer mod) {
 		EntityModelLayerRegistry.registerModelLayer(SussyBarrelModel.MODEL_LAYER, SussyBarrelModel::getTexturedModelData);
 
 		WorldRenderEvents.AFTER_ENTITIES.register(context -> {

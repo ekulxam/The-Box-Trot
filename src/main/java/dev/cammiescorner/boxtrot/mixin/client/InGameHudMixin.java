@@ -3,7 +3,7 @@ package dev.cammiescorner.boxtrot.mixin.client;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import dev.cammiescorner.boxtrot.BoxTrot;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -21,9 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
 	@Shadow @Final private MinecraftClient client;
-
-
-	@Shadow protected abstract void renderOverlay(DrawContext context, Identifier texture, float opacity);
+	@Shadow protected abstract void renderOverlay(GuiGraphics context, Identifier texture, float opacity);
 
 	@Unique private static final Identifier BARREL_OVERLAY = BoxTrot.id("textures/misc/barrel_hole.png");
 
@@ -41,7 +39,7 @@ public abstract class InGameHudMixin {
 	@Inject(method = "render", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z"
 	))
-	public void boxtrot$renderOverlay(DrawContext context, float tickDelta, CallbackInfo ci) {
+	public void boxtrot$renderOverlay(GuiGraphics context, float tickDelta, CallbackInfo ci) {
 		if(client.player != null && client.player.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL)) {
 			renderOverlay(context, BARREL_OVERLAY, 1F);
 		}

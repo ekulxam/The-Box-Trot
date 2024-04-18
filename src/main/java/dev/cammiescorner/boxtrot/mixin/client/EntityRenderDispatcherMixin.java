@@ -1,7 +1,7 @@
 package dev.cammiescorner.boxtrot.mixin.client;
 
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
