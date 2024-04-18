@@ -75,7 +75,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 			data = ScaleTypes.EYE_HEIGHT.getScaleData(this);
 			data.setScale(1F / 1.5F);
 
-			if(world.isClient()) {
+			if(getWorld().isClient()) {
 				if(getVelocity().horizontalLength() > 0)
 					setStoodStillFor(0);
 				else
@@ -109,7 +109,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 				GenericContainerScreenHandler.createGeneric9x3(syncId, inv, barrelInventory), Text.translatable("container.barrel")
 			));
 
-			info.setReturnValue(ActionResult.success(world.isClient));
+			info.setReturnValue(ActionResult.success(getWorld().isClient));
 		}
 	}
 

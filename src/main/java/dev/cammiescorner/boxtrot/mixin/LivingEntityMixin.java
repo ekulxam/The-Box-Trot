@@ -1,6 +1,6 @@
 package dev.cammiescorner.boxtrot.mixin;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import dev.cammiescorner.boxtrot.common.config.BoxTrotConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
