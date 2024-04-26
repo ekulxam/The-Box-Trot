@@ -33,6 +33,6 @@ public class BoxTrotClient implements ClientModInitializer {
 						camPos.getX(), camPos.getY(), camPos.getZ(), target.getBlockPos(), Blocks.BARREL.getDefaultState());
 			}
 		});
-		ClientPlayNetworking.registerReceiver(SyncBoxTrotConfig.ID, SyncBoxTrotConfig::handler);
+		ClientPlayNetworking.registerGlobalReceiver(SyncBoxTrotConfig.ID, SyncBoxTrotConfig::handler);
 	}
 }
