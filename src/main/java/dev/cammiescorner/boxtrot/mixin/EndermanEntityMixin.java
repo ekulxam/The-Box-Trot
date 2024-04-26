@@ -11,12 +11,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import javax.swing.*;
+
 @Mixin(EndermanEntity.class)
 public class EndermanEntityMixin {
 	@ModifyExpressionValue(method = "isPlayerStaring", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z"
 	))
 	public boolean boxtrot$cantSeeMe(boolean original, @Local ItemStack stack) {
-        return !BoxTrotConfig.doesBarrelFoolEndermen || !stack.isOf(Items.BARREL);
+		return BoxTrotConfig.doesBarrelFoolEndermen && stack.isOf(Items.BARREL) || original;
     }
 }
