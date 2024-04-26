@@ -14,11 +14,7 @@ public class BoxTrotConfig extends MidnightConfig {
 	@Entry public static boolean barrelRotates = true;
 	public static List<Boolean> getConfigValues(){
 		List<Boolean> configValues =  new ArrayList<>();
-		configValues.add(doesBarrelFoolEndermen);
 		configValues.add(doesBarrelHideParticles);
-		configValues.add(doesBarrelFoolMobs);
-		configValues.add(doesBarrelFoolAttackers);
-		configValues.add(canOpenPlayerBarrels);
 		configValues.add(barrelRotates);
 		return configValues;
 	}

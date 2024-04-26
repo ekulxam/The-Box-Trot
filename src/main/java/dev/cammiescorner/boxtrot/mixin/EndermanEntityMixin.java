@@ -4,14 +4,10 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.cammiescorner.boxtrot.common.config.BoxTrotConfig;
 import net.minecraft.entity.mob.EndermanEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import javax.swing.*;
 
 @Mixin(EndermanEntity.class)
 public class EndermanEntityMixin {
