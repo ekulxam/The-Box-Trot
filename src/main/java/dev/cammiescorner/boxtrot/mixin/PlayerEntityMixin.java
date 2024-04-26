@@ -40,15 +40,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 	@Shadow public abstract OptionalInt openHandledScreen(@Nullable NamedScreenHandlerFactory factory);
 	@Shadow protected abstract void closeHandledScreen();
 	@Shadow public ScreenHandler currentScreenHandler;
-
 	@Unique private int stoodStillFor;
 	@Unique private FakeBarrelInventory barrelInventory;
+	@Unique private int barrelYaw;
+	@Unique private int barrelPitch;
 
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
 	@Inject(method = "tick", at = @At("HEAD"))
 	public void boxtrot$tick(CallbackInfo info) {
-		FakeBarrelInventory barrelInventory = getFakeBarrelInv();
+		FakeBarrelInventory barrelInventory = boxtrot$getFakeBarrelInv();
 
 		if(barrelInventory != null && currentScreenHandler != null) {
 			PlayerEntity target = barrelInventory.getTarget();
@@ -76,19 +77,23 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 			data.setScale(1F / 1.5F);
 
 			if(getWorld().isClient()) {
-				if(getVelocity().horizontalLength() > 0)
-					setStoodStillFor(0);
-				else
-					setStoodStillFor(getStoodStillFor() + 1);
+				if(getVelocity().horizontalLength() > 0) {
+					boxtrot$setStoodStillFor(0);
+				} else {
+					boxtrot$setStoodStillFor(boxtrot$getStoodStillFor() + 1);
+				}
 
-				if(getStoodStillFor() == 10)
+				if (boxtrot$getStoodStillFor() == 0 || boxtrot$getStoodStillFor() == 1) {
+					barrelYaw = Math.round(this.getYaw() / 90f) * 90; // 90 degree increments to line up with the block
+					barrelPitch = Math.round(this.getPitch() / 90f) * 90;
+				} else if (boxtrot$getStoodStillFor() == 10) {
 					setPosition(getBlockX() + 0.5, getY(), getBlockZ() + 0.5);
+				}
 
 				SyncStandingStillTimer.send(stoodStillFor);
 			}
-		}
-		else {
-			setStoodStillFor(0);
+		} else {
+			boxtrot$setStoodStillFor(0);
 			ScaleData data = ScaleTypes.HITBOX_HEIGHT.getScaleData(this);
 			data.setScale(1F);
 
@@ -116,11 +121,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
 	public void boxtrot$writeNbt(NbtCompound nbt, CallbackInfo info) {
 		nbt.putInt("StoodStillFor", stoodStillFor);
+		nbt.putInt("BarrelYaw", barrelYaw);
+		nbt.putInt("BarrelPitch", barrelPitch);
 	}
 
 	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
 	public void boxtrot$readNbt(NbtCompound nbt, CallbackInfo info) {
 		stoodStillFor = nbt.getInt("StoodStillFor");
+		barrelYaw = nbt.getInt("BarrelYaw");
+		barrelPitch = nbt.getInt("BarrelPitch");
 	}
 
 	@Override
@@ -134,17 +143,27 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 	}
 
 	@Override
-	public FakeBarrelInventory getFakeBarrelInv() {
+	public FakeBarrelInventory boxtrot$getFakeBarrelInv() {
 		return barrelInventory;
 	}
 
 	@Override
-	public int getStoodStillFor() {
+	public int boxtrot$getStoodStillFor() {
 		return stoodStillFor;
 	}
 
 	@Override
-	public void setStoodStillFor(int value) {
+	public void boxtrot$setStoodStillFor(int value) {
 		stoodStillFor = value;
+	}
+
+	@Override
+	public int boxtrot$getBarrelYaw() {
+		return barrelYaw;
+	}
+
+	@Override
+	public int boxtrot$getBarrelPitch() {
+		return barrelPitch;
 	}
 }
