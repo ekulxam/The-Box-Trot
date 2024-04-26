@@ -1,8 +1,10 @@
 package dev.cammiescorner.boxtrot.common;
 
 public interface FakeBarrel {
-	FakeBarrelInventory getFakeBarrelInv();
+	FakeBarrelInventory boxtrot$getFakeBarrelInv();
 
-	int getStoodStillFor();
-	void setStoodStillFor(int value);
+	int boxtrot$getStoodStillFor();
+	void boxtrot$setStoodStillFor(int value);
+	int boxtrot$getBarrelYaw();
+	int boxtrot$getBarrelPitch();
 }

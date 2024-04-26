@@ -1,6 +1,7 @@
 package dev.cammiescorner.boxtrot.client;
 
 import dev.cammiescorner.boxtrot.client.models.SussyBarrelModel;
+import dev.cammiescorner.boxtrot.common.packets.SyncBoxTrotConfig;
 import dev.cammiescorner.boxtrot.mixin.client.WorldRendererAccessor;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
@@ -14,6 +15,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
+import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 public class BoxTrotClient implements ClientModInitializer {
 	@Override
@@ -31,5 +33,6 @@ public class BoxTrotClient implements ClientModInitializer {
 						camPos.getX(), camPos.getY(), camPos.getZ(), target.getBlockPos(), Blocks.BARREL.getDefaultState());
 			}
 		});
+		ClientPlayNetworking.registerReceiver(SyncBoxTrotConfig.ID, SyncBoxTrotConfig::handler);
 	}
 }

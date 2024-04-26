@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(BarrelBlock.class)
 public class BarrelBlockMixin implements Equippable {
+
 	@Override
 	public EquipmentSlot getPreferredSlot() {
 		return EquipmentSlot.HEAD;

@@ -24,6 +24,6 @@ public class SyncStandingStillTimer {
 	public static void handler(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
 		int value = buf.readVarInt();
 
-		server.execute(() -> ((FakeBarrel) player).setStoodStillFor(value));
+		server.execute(() -> ((FakeBarrel) player).boxtrot$setStoodStillFor(value));
 	}
 }
