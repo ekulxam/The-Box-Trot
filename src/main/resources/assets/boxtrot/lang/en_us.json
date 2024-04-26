@@ -4,5 +4,7 @@
 	"boxtrot.midnightconfig.doesBarrelHideParticles": "Does the barrel disguise hide particles while Sneaking?",
 	"boxtrot.midnightconfig.doesBarrelFoolMobs": "Does the barrel disguise hide you from mobs while Sneaking?",
 	"boxtrot.midnightconfig.doesBarrelFoolAttackers": "Does the barrel disguise make attackers forget you while Sneaking?",
-	"boxtrot.midnightconfig.canOpenPlayerBarrels": "Can the player's inventory be opened while disguised as a barrel?"
+	"boxtrot.midnightconfig.canOpenPlayerBarrels": "Can the player's inventory be opened while disguised as a barrel?",
+  "boxtrot.midnightconfig.barrelRotates": "Does the barrel rotate with the player's yaw and pitch?",
+  "boxtrot.configdesync": "Your config was different from the server's!"
 }

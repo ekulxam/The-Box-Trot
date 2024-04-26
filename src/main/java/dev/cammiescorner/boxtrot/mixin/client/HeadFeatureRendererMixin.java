@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import dev.cammiescorner.boxtrot.BoxTrot;
 import dev.cammiescorner.boxtrot.client.models.SussyBarrelModel;
 import dev.cammiescorner.boxtrot.common.FakeBarrel;
+import dev.cammiescorner.boxtrot.common.config.BoxTrotConfig;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -72,15 +73,9 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
 				matrixStack.translate(0, -1.375, 0);
 				barrelModel.render(matrixStack, vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutout(SUSSY_BARREL)), light, OverlayTexture.DEFAULT_UV, 1F, 1F, 1F, 1F);
 			} else {
-				if (livingEntity instanceof AbstractClientPlayerEntity player) {
-					float yaw = ((FakeBarrel) player).boxtrot$getBarrelYaw();
-					matrixStack.multiply(Axis.Y_NEGATIVE.rotationDegrees(yaw));
-					float pitch = ((FakeBarrel) player).boxtrot$getBarrelPitch();
-					if ((yaw % 180) >= 135 || (yaw % 180) <= 45) {
-						matrixStack.multiply(Axis.X_POSITIVE.rotationDegrees(pitch));
-					} else {
-						matrixStack.multiply(Axis.Z_POSITIVE.rotationDegrees(pitch));
-					}
+				if (BoxTrotConfig.barrelRotates && livingEntity instanceof AbstractClientPlayerEntity player) {
+					matrixStack.multiply(Axis.Y_NEGATIVE.rotationDegrees(((FakeBarrel) player).boxtrot$getBarrelYaw()));
+					matrixStack.multiply(Axis.X_POSITIVE.rotationDegrees(((FakeBarrel) player).boxtrot$getBarrelPitch()));
 				}
 				heldItemRenderer.renderItem(livingEntity, BARREL_STACK, ModelTransformationMode.NONE, false, matrixStack, vertexConsumerProvider, light);
 			}
