@@ -35,7 +35,7 @@ public class SyncBoxTrotConfig {
 	public static void handler(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
 		List<Boolean> configValues = buf.readCollection(ArrayList::new, PacketByteBuf::readBoolean);
 		if (!configValues.equals(BoxTrotConfig.getConfigValues())) {
-			handler.onDisconnected(Text.translatable("boxtrot.configdesync"));
+			handler.onDisconnected(Text.translatable("boxtrot.multiplayer.configdesync"));
 		}
 	}
 }
