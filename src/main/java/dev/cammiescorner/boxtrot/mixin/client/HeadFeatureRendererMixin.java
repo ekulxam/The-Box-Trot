@@ -19,6 +19,7 @@ import net.minecraft.client.render.entity.model.ModelWithHead;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -61,7 +62,7 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
 			target = "Lnet/minecraft/client/render/item/HeldItemRenderer;renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"
 	), cancellable = true)
 	private void boxtrot$render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo info, @Local ItemStack itemStack) {
-		isBarrel = itemStack.isOf(Items.BARREL);
+		isBarrel = itemStack.isOf(Items.BARREL) || livingEntity.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL); // trinkets compat
 
 		if(isBarrel) {
 			matrixStack.pop();

@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
-	@Shadow
-	public abstract boolean isSneaking();
+
+	@Shadow public abstract boolean isSneaking();
 
 	public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
 		super(world, profile);

@@ -8,6 +8,8 @@ quilted_fabric_api = "7.5.0+0.91.0-1.20.1"
 modmenu = "7.2.2"
 midnightlib = "1.4.1-quilt"
 pehkui = "3.8.0"
+amarite = "1.0.8"
+trinkets = "3.7.1"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -19,6 +21,8 @@ quilted_fabric_api_deprecated = { module = "org.quiltmc.quilted-fabric-api:quilt
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 midnightlib = { module = "maven.modrinth:midnightlib", version.ref = "midnightlib" }
 pehkui = { module = "com.github.Virtuoel:Pehkui", version.ref = "pehkui" }
+amarite = { module = "maven.modrinth:amarite", version.ref = "amarite" }
+trinkets = { module = "maven.modrinth:trinkets", version.ref = "trinkets" }
 
 # If you have multiple similar dependencies, you can declare a dependency bundle and reference it on the build script with "libs.bundles.example".
 [bundles]
