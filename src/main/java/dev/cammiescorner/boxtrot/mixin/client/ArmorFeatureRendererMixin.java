@@ -20,7 +20,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
 	@WrapWithCondition(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/render/entity/feature/ArmorFeatureRenderer;renderArmor(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/EquipmentSlot;ILnet/minecraft/client/render/entity/model/BipedEntityModel;)V"
 	))
-	public boolean boxtrot$hideArmour(ArmorFeatureRenderer<T, M, A> instance, MatrixStack matrices, VertexConsumerProvider vertexConsumers, T entity, EquipmentSlot armorSlot, int light, A model) {
+	public boolean hideArmour(ArmorFeatureRenderer<T, M, A> instance, MatrixStack matrices, VertexConsumerProvider vertexConsumers, T entity, EquipmentSlot armorSlot, int light, A model) {
 		boolean hasBarrel = entity.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL);
 		boolean isUpperBody = armorSlot == EquipmentSlot.HEAD || armorSlot == EquipmentSlot.CHEST;
 

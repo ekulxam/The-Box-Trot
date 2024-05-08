@@ -42,6 +42,7 @@ public class FakeBarrelInventory extends SimpleInventory {
 		return target;
 	}
 
+	@SuppressWarnings("unused")
 	public void setTarget(PlayerEntity player) {
 		target = player;
 	}

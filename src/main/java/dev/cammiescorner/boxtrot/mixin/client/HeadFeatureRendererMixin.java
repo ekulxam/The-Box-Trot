@@ -47,21 +47,21 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
 	@Unique private static final Identifier SUSSY_BARREL = BoxTrot.id("textures/entity/sussy_barrel.png");
 
 	@Inject(method = "<init>(Lnet/minecraft/client/render/entity/feature/FeatureRendererContext;Lnet/minecraft/client/render/entity/model/EntityModelLoader;Lnet/minecraft/client/render/item/HeldItemRenderer;)V", at = @At("TAIL"))
-	private void boxtrot$setModel(FeatureRendererContext<T, M> context, EntityModelLoader loader, HeldItemRenderer heldItemRenderer, CallbackInfo info) {
+	private void setBarrelModel(FeatureRendererContext<T, M> context, EntityModelLoader loader, HeldItemRenderer heldItemRenderer, CallbackInfo info) {
 		barrelModel = new SussyBarrelModel<T>(loader.getModelPart(SussyBarrelModel.MODEL_LAYER));
 	}
 
 	@WrapWithCondition(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/render/entity/feature/HeadFeatureRenderer;translate(Lnet/minecraft/client/util/math/MatrixStack;Z)V"
 	))
-	private boolean boxtrot$noWeirdItemShit(MatrixStack matrices, boolean villager) {
+	private boolean noWeirdItemShit(MatrixStack matrices, boolean villager) {
 		return !isBarrel;
 	}
 
 	@Inject(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/render/item/HeldItemRenderer;renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"
 	), cancellable = true)
-	private void boxtrot$render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo info, @Local ItemStack itemStack) {
+	private void renderBarrel(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo info, @Local ItemStack itemStack) {
 		isBarrel = itemStack.isOf(Items.BARREL) || livingEntity.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL); // trinkets compat
 
 		if(isBarrel) {

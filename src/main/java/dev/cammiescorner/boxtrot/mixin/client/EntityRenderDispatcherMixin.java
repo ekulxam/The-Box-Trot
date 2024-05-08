@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EntityRenderDispatcher.class)
 public class EntityRenderDispatcherMixin {
 	@Inject(method = "renderHitbox", at = @At("HEAD"), cancellable = true)
-	private static void boxtrot$hideF3Hitbox(MatrixStack matrices, VertexConsumer vertices, Entity entity, float tickDelta, CallbackInfo info) {
+	private static void hideBarrelF3Hitbox(MatrixStack matrices, VertexConsumer vertices, Entity entity, float tickDelta, CallbackInfo info) {
 		if(entity instanceof PlayerEntity player && player != MinecraftClient.getInstance().player && player.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL) && player.isSneaking())
 			info.cancel();
 	}

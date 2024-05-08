@@ -14,7 +14,7 @@ public class EndermanEntityMixin {
 	@ModifyExpressionValue(method = "isPlayerStaring", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z"
 	))
-	public boolean boxtrot$cantSeeMe(boolean original, @Local ItemStack stack) {
-		return BoxTrotConfig.doesBarrelFoolEndermen && stack.isOf(Items.BARREL) || original;
+	public boolean barrelWorksLikePumpkin(boolean original, @Local ItemStack stack) {
+		return original || (BoxTrotConfig.doesBarrelFoolEndermen && stack.isOf(Items.BARREL));
     }
 }

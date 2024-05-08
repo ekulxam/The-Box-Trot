@@ -34,8 +34,9 @@ import virtuoel.pehkui.api.ScaleTypes;
 
 import java.util.OptionalInt;
 
+@SuppressWarnings("UnreachableCode")
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarrel {
+public abstract class PlayerEntityMixin extends LivingEntityMixin implements FakeBarrel {
 	@Shadow public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 	@Shadow public abstract OptionalInt openHandledScreen(@Nullable NamedScreenHandlerFactory factory);
 	@Shadow protected abstract void closeHandledScreen();
@@ -48,13 +49,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
 	@Inject(method = "tick", at = @At("HEAD"))
-	public void boxtrot$tick(CallbackInfo info) {
+	public void boxTick(CallbackInfo info) {
 		FakeBarrelInventory barrelInventory = boxtrot$getFakeBarrelInv();
 
 		if(barrelInventory != null && currentScreenHandler != null) {
 			PlayerEntity target = barrelInventory.getTarget();
 
-			if(!(target.isSneaking() && target.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL)) || squaredDistanceTo(target) > 64) {
+			if(!(target.isSneaking() && target.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL)) || this.squaredDistanceTo(target) > 64) {
 				closeHandledScreen();
 				this.barrelInventory = null;
 				return;
@@ -67,17 +68,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 		}
 
 		if(getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL) && isSneaking()) {
-			ScaleData data = ScaleTypes.HITBOX_HEIGHT.getScaleData(this);
+			ScaleData data = ScaleTypes.HITBOX_HEIGHT.getScaleData((PlayerEntity) (Object) this);
 			data.setScale(1F / 1.5F);
 
-			data = ScaleTypes.HITBOX_WIDTH.getScaleData(this);
+			data = ScaleTypes.HITBOX_WIDTH.getScaleData((PlayerEntity) (Object) this);
 			data.setScale(1F / 0.6F);
 
-			data = ScaleTypes.EYE_HEIGHT.getScaleData(this);
+			data = ScaleTypes.EYE_HEIGHT.getScaleData((PlayerEntity) (Object) this);
 			data.setScale(1F / 1.5F);
 
 			if(getWorld().isClient()) {
-				if(getVelocity().horizontalLength() > 0) {
+				if(this.getVelocity().horizontalLength() > 0) {
 					boxtrot$setStoodStillFor(0);
 				} else {
 					boxtrot$setStoodStillFor(boxtrot$getStoodStillFor() + 1);
@@ -87,26 +88,26 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 					barrelYaw = Math.round(this.getYaw() / 90f) * 90; // 90 degree increments to line up with the block
 					barrelPitch = Math.round(this.getPitch() / 90f) * 90;
 				} else if (boxtrot$getStoodStillFor() == 10) {
-					setPosition(getBlockX() + 0.5, getY(), getBlockZ() + 0.5);
+					this.setPosition(getBlockX() + 0.5, getY(), getBlockZ() + 0.5);
 				}
 
 				SyncStandingStillTimer.send(stoodStillFor);
 			}
 		} else {
 			boxtrot$setStoodStillFor(0);
-			ScaleData data = ScaleTypes.HITBOX_HEIGHT.getScaleData(this);
+			ScaleData data = ScaleTypes.HITBOX_HEIGHT.getScaleData((PlayerEntity) (Object) this);
 			data.setScale(1F);
 
-			data = ScaleTypes.HITBOX_WIDTH.getScaleData(this);
+			data = ScaleTypes.HITBOX_WIDTH.getScaleData((PlayerEntity) (Object) this);
 			data.setScale(1F);
 
-			data = ScaleTypes.EYE_HEIGHT.getScaleData(this);
+			data = ScaleTypes.EYE_HEIGHT.getScaleData((PlayerEntity) (Object) this);
 			data.setScale(1F);
 		}
 	}
 
 	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
-	private void boxtrot$openInventory(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> info) {
+	private void openBoxInventory(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> info) {
 		if(BoxTrotConfig.canOpenPlayerBarrels && entity instanceof PlayerEntity target && target.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL) && target.isSneaking()) {
 			barrelInventory = new FakeBarrelInventory(target);
 
@@ -114,32 +115,32 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FakeBarr
 				GenericContainerScreenHandler.createGeneric9x3(syncId, inv, barrelInventory), Text.translatable("container.barrel")
 			));
 
-			info.setReturnValue(ActionResult.success(getWorld().isClient));
+			info.setReturnValue(ActionResult.success(this.getWorld().isClient()));
 		}
 	}
 
 	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-	public void boxtrot$writeNbt(NbtCompound nbt, CallbackInfo info) {
+	public void writeBarrelNbt(NbtCompound nbt, CallbackInfo info) {
 		nbt.putInt("StoodStillFor", stoodStillFor);
 		nbt.putInt("BarrelYaw", barrelYaw);
 		nbt.putInt("BarrelPitch", barrelPitch);
 	}
 
 	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-	public void boxtrot$readNbt(NbtCompound nbt, CallbackInfo info) {
-		stoodStillFor = nbt.getInt("StoodStillFor");
-		barrelYaw = nbt.getInt("BarrelYaw");
-		barrelPitch = nbt.getInt("BarrelPitch");
+	public void readBarrelNbt(NbtCompound nbt, CallbackInfo info) {
+		if (nbt.contains("StoodStillFor")) stoodStillFor = nbt.getInt("StoodStillFor");
+		if (nbt.contains("BarrelYaw")) barrelYaw = nbt.getInt("BarrelYaw");
+		if (nbt.contains("BarrelPitch")) barrelPitch = nbt.getInt("BarrelPitch");
 	}
 
 	@Override
-	public boolean isCollidable() {
-		return getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL) && isSneaking();
+	protected boolean isBarrelCollidable(boolean original) {
+		return original || (this.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL) && isSneaking());
 	}
 
 	@Override
-	public boolean isPushable() {
-		return !(getEquippedStack(EquipmentSlot.HEAD).isOf(Items.BARREL) && isSneaking());
+	protected boolean isBarrelPushable(boolean original) {
+		return this.isBarrelCollidable(original);
 	}
 
 	@Override
